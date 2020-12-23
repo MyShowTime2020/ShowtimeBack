@@ -6,9 +6,11 @@ import { AppModule } from './app.module';
 import { warn } from 'console';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
+import { ProductsModule } from './products/products.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { cors: true });
+  app.enableCors();
 
   // ╦ ╦╔═╗╔═╗  ╔═╗╦  ╔═╗╔╗ ╔═╗╦    ╔═╗╦╔═╗╔═╗╔═╗
   // ║ ║╚═╗║╣   ║ ╦║  ║ ║╠╩╗╠═╣║    ╠═╝║╠═╝║╣ ╚═╗
@@ -21,15 +23,17 @@ async function bootstrap() {
   // ╚═╗║║║╠═╣║ ╦║ ╦║╣ ╠╦╝
   // ╚═╝╚╩╝╩ ╩╚═╝╚═╝╚═╝╩╚═
   const options = new DocumentBuilder()
-    .setTitle('API')
+    .setTitle('SHOWTIME API REST')
     .setDescription('API description')
     .setVersion('1.0')
-    .addTag('API')
+    .addTag('INDEX OF')
     .build();
   const document = SwaggerModule.createDocument(app, options, {
     include: [
       UserModule,
       ArticleModule,
+      ProductsModule
+
   ],
   });
   SwaggerModule.setup('api', app, document);
