@@ -6,20 +6,18 @@ import {
   Param,
   Patch,
   Delete,
+  UseGuards
 } from '@nestjs/common';
-import {
-  ApiCreatedResponse,
-  ApiOkResponse,
-  ApiUseTags,
-  ApiBearerAuth,
-  ApiImplicitHeader,
-  ApiOperation,
-  } from '@nestjs/swagger';
+import { ApiUseTags, ApiBearerAuth } from '@nestjs/swagger';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
+import { Roles } from './../auth/decorators/roles.decorator';
+import { AuthGuard } from '@nestjs/passport';
 
 import { ProductsService } from './products.service';
 
 @ApiUseTags('Products')
 @Controller('products')
+@UseGuards(RolesGuard)
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
@@ -61,13 +59,23 @@ export class ProductsController {
     @Body('date_posted') prodDate: string,
     @Body('img') prodImg: string,
   ) {
-    await this.productsService.updateProduct(prodId, prodTitle, prodDesc, prodPrice, prodDate, prodImg);
+    await this.productsService.updateProduct(
+      prodId,
+      prodTitle,
+      prodDesc,
+      prodPrice,
+      prodDate,
+      prodImg,
+    );
     return null;
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard('jwt'))
+  @Roles('admin')
+  @ApiBearerAuth()
   async removeProduct(@Param('id') prodId: string) {
-      await this.productsService.deleteProduct(prodId);
-      return null;
+    await this.productsService.deleteProduct(prodId);
+    return null;
   }
 }
