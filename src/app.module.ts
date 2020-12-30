@@ -8,7 +8,13 @@ import { ArticleModule } from './article/article.module';
 import { ProductsModule } from './products/products.module';
 
 @Module({
-  imports: [MongooseModule.forRoot(process.env.MONGO_URI), UserModule, AuthModule, ArticleModule, ProductsModule ],
+  imports: [
+    MongooseModule.forRoot(process.env.MONGO_URI),
+    UserModule,
+    AuthModule,
+    ArticleModule,
+    ProductsModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

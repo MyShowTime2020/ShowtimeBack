@@ -15,9 +15,11 @@ async function bootstrap() {
   // ╦ ╦╔═╗╔═╗  ╔═╗╦  ╔═╗╔╗ ╔═╗╦    ╔═╗╦╔═╗╔═╗╔═╗
   // ║ ║╚═╗║╣   ║ ╦║  ║ ║╠╩╗╠═╣║    ╠═╝║╠═╝║╣ ╚═╗
   // ╚═╝╚═╝╚═╝  ╚═╝╩═╝╚═╝╚═╝╩ ╩╩═╝  ╩  ╩╩  ╚═╝╚═╝
-  app.useGlobalPipes(new ValidationPipe({
-    // disableErrorMessages: true,
-  }));
+  app.useGlobalPipes(
+    new ValidationPipe({
+      // disableErrorMessages: true,
+    }),
+  );
 
   // ╔═╗╦ ╦╔═╗╔═╗╔═╗╔═╗╦═╗
   // ╚═╗║║║╠═╣║ ╦║ ╦║╣ ╠╦╝
@@ -29,12 +31,7 @@ async function bootstrap() {
     .addTag('INDEX OF')
     .build();
   const document = SwaggerModule.createDocument(app, options, {
-    include: [
-      UserModule,
-      ArticleModule,
-      ProductsModule
-
-  ],
+    include: [UserModule, ArticleModule, ProductsModule],
   });
   SwaggerModule.setup('api', app, document);
 

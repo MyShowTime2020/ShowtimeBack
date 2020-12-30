@@ -16,9 +16,15 @@ export class ProductsService {
     const product = new this.productModel(CreateProductDto);
     await product.save();
     return product;
-}
+  }
 
-  async insertProduct(title: string, desc: string, price: number, date_posted: string, img: string) {
+  async insertProduct(
+    title: string,
+    desc: string,
+    price: number,
+    date_posted: string,
+    img: string,
+  ) {
     const newProduct = new this.productModel({
       title,
       description: desc,
@@ -38,7 +44,7 @@ export class ProductsService {
       description: prod.description,
       price: prod.price,
       date_posted: prod.date_posted,
-      img: prod.img
+      img: prod.img,
     }));
   }
 
@@ -60,7 +66,7 @@ export class ProductsService {
     desc: string,
     price: number,
     date_posted: string,
-    img: string
+    img: string,
   ) {
     const updatedProduct = await this.findProduct(productId);
     if (title) {
@@ -76,13 +82,13 @@ export class ProductsService {
       updatedProduct.date_posted = date_posted;
     }
     if (img) {
-      updatedProduct.img  = img;
+      updatedProduct.img = img;
     }
     updatedProduct.save();
   }
 
   async deleteProduct(prodId: string) {
-    const result = await this.productModel.deleteOne({_id: prodId}).exec();
+    const result = await this.productModel.deleteOne({ _id: prodId }).exec();
     if (result.n === 0) {
       throw new NotFoundException('Could not find product.');
     }

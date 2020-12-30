@@ -8,9 +8,17 @@ import {
   Delete,
   UseGuards,
   HttpCode,
-  HttpStatus
+  HttpStatus,
 } from '@nestjs/common';
-import { ApiUseTags, ApiCreatedResponse, ApiImplicitHeader, ApiBearerAuth, ApiOperation, ApiOkResponse, ApiImplicitParam } from '@nestjs/swagger';
+import {
+  ApiUseTags,
+  ApiCreatedResponse,
+  ApiImplicitHeader,
+  ApiBearerAuth,
+  ApiOperation,
+  ApiOkResponse,
+  ApiImplicitParam,
+} from '@nestjs/swagger';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { Roles } from './../auth/decorators/roles.decorator';
 import { AuthGuard } from '@nestjs/passport';
@@ -28,21 +36,20 @@ export class ProductsController {
   @HttpCode(HttpStatus.CREATED)
   @UseGuards(AuthGuard('jwt'))
   @Roles('admin')
-  @ApiOperation({title: '-> Create one product <-',})
+  @ApiOperation({ title: '-> Create one product <-' })
   @ApiBearerAuth()
   @ApiImplicitHeader({
     name: 'Bearer',
-    description: 'the token we need for create product.'
-})
+    description: 'the token we need for create product.',
+  })
   @ApiCreatedResponse({})
   async addProductDto(@Body() createProductDto: CreateProductDto) {
-        return await this.productsService.createProduct(createProductDto);
-    }
-
+    return await this.productsService.createProduct(createProductDto);
+  }
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({title: '-> Get All products -<',})
+  @ApiOperation({ title: '-> Get All products -<' })
   @ApiOkResponse({})
   async getAllProducts() {
     const products = await this.productsService.getProducts();
@@ -51,8 +58,8 @@ export class ProductsController {
 
   @Get(':id')
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({title: '-> Get One product <-',})
-  @ApiImplicitParam({name: 'id', description: 'id of article'})
+  @ApiOperation({ title: '-> Get One product <-' })
+  @ApiImplicitParam({ name: 'id', description: 'id of article' })
   @ApiOkResponse({})
   getProduct(@Param('id') prodId: string) {
     return this.productsService.getSingleProduct(prodId);
@@ -82,7 +89,7 @@ export class ProductsController {
   @HttpCode(HttpStatus.OK)
   @UseGuards(AuthGuard('jwt'))
   @Roles('admin')
-  @ApiOperation({title: '-> Delete one product <-',})
+  @ApiOperation({ title: '-> Delete one product <-' })
   @ApiBearerAuth()
   async removeProduct(@Param('id') prodId: string) {
     await this.productsService.deleteProduct(prodId);
