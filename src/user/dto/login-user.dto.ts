@@ -4,7 +4,7 @@ import { ApiModelProperty } from '@nestjs/swagger';
 export class LoginUserDto {
 
     @ApiModelProperty({
-      example: 'pejman@gmail.com',
+      example: 'adress@mail.com',
       description: 'The email of the User',
       format: 'email',
       uniqueItems: true,
