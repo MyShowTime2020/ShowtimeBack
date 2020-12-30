@@ -15,7 +15,7 @@ Clone the repository
 
 Switch to the repo folder
 
-    cd real-world-example-nestjs-mongoose-jwt-auth
+    cd ShowtimeBack
 
 Install dependencies
 
