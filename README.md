@@ -57,4 +57,4 @@ This example repo uses the NestJS swagger module for API documentation. [NestJS 
 
 ## Authors
 
-**Epitech**
+**Epitech2021**
